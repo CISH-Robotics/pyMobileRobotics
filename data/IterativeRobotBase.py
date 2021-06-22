@@ -93,7 +93,7 @@ class IterativeRobotBase(RobotBase.RobotBase):
     __lastTime = time.time()
     def loopFunc(self):
 
-        logging.debug(time.time() - self.__lastTime)
+        logging.debug(round(time.time() - self.__lastTime, 3))
         self.__lastTime = time.time()
 
         if super().isDisabled():
