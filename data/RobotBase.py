@@ -13,9 +13,8 @@ class RobotBase():
 
     __enabled = False
 
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s - %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S')
+    FORMAT = '%(asctime)s %(levelname)s: %(message)s'
+    logging.basicConfig(level=logging.DEBUG, format=FORMAT)
 
     def getMode(self):
         return mode.kNone
