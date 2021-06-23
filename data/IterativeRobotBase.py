@@ -36,6 +36,8 @@ class IterativeRobotBase(RobotBase.RobotBase):
 
     __lastMode = RobotBase.mode.kNone
 
+    """----------- Overridable initialization code -----------------"""
+
     def robotInit(self):
         logging.info("Default robotInit() method... Override me!")
 
@@ -53,6 +55,8 @@ class IterativeRobotBase(RobotBase.RobotBase):
 
     def testInit(self):
         logging.info("Default testInit() method... Override me!")
+
+    """----------- Overridable periodic code -----------------"""
 
     __rpFirstRun = True
     def robotPeriodic(self):
@@ -90,8 +94,9 @@ class IterativeRobotBase(RobotBase.RobotBase):
             logging.info("Default testPeriodic() method.. Override me!")
             self.__tmpFirstRun = False
 
-    def loopFunc(self):
+    """----------- Internal functions code -----------------"""
 
+    def loopFunc(self):
         if self.isDisabled():
             if self.__lastMode != RobotBase.mode.kDisabled:
                 self.disabledInit()
