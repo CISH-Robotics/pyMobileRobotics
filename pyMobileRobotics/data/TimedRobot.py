@@ -1,6 +1,7 @@
 from . import IterativeRobotBase
 from . import RobotBase
 from oclock import Timer
+import time
 
 
 class TimedRobot(IterativeRobotBase.IterativeRobotBase):
@@ -18,9 +19,10 @@ class TimedRobot(IterativeRobotBase.IterativeRobotBase):
             self.simulationInit()
 
         __expirationTime = 0
-
+        __lastTime = time.perf_counter()
         timer = Timer(interval=self.__period)
         while True:
             __expirationTime += self.__period
             self.loopFunc()
             timer.checkpt()
+            __lastTime = time.perf_counter()
