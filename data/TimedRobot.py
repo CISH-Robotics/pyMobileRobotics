@@ -2,6 +2,7 @@ from . import IterativeRobotBase
 from . import RobotBase
 from oclock import Timer
 
+
 class TimedRobot(IterativeRobotBase.IterativeRobotBase):
 
     def __init__(self, period=0.02):
