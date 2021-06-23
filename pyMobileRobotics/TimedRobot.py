@@ -1,10 +1,9 @@
-from . import IterativeRobotBase
-from . import RobotBase
+from .IterativeRobotBase import IterativeRobotBase
 from oclock import Timer
 import time
 
 
-class TimedRobot(IterativeRobotBase.IterativeRobotBase):
+class TimedRobot(IterativeRobotBase):
 
     def __init__(self, period=0.02):
         self.__period = period

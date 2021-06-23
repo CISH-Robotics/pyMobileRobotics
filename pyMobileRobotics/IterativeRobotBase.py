@@ -1,8 +1,9 @@
-from . import RobotBase
+from .RobotBase import RobotBase
+from .RobotBase import mode
 import logging
 import time
 
-class IterativeRobotBase(RobotBase.RobotBase):
+class IterativeRobotBase(RobotBase):
     """
     IterativeRobotBase implements a specific type of robot program framework, extending the RobotBase
     class.
@@ -34,7 +35,7 @@ class IterativeRobotBase(RobotBase.RobotBase):
     - testPeriodic()
     """
 
-    __lastMode = RobotBase.mode.kNone
+    __lastMode = mode.kNone
 
     """----------- Overridable initialization code -----------------"""
 
@@ -98,24 +99,24 @@ class IterativeRobotBase(RobotBase.RobotBase):
 
     def loopFunc(self):
         if self.isDisabled():
-            if self.__lastMode != RobotBase.mode.kDisabled:
+            if self.__lastMode != mode.kDisabled:
                 self.disabledInit()
-                self.__lastMode = RobotBase.mode.kDisabled
+                self.__lastMode = mode.kDisabled
             self.disabledPeriodic()
         elif self.isAutonomous():
-            if self.__lastMode != RobotBase.mode.kAutonomous:
+            if self.__lastMode != mode.kAutonomous:
                 self.autonomousInit()
-                self.__lastMode = RobotBase.mode.kAutonomous
+                self.__lastMode = mode.kAutonomous
             self.autonomousPeriodic()
         elif self.isTeleoperation():
-            if self.__lastMode != RobotBase.mode.kTeleop:
+            if self.__lastMode != mode.kTeleop:
                 self.teleopInit()
-                self.__lastMode = RobotBase.mode.kTeleop
+                self.__lastMode = mode.kTeleop
             self.teleopPeriodic()
         elif self.isTest():
-            if self.__lastMode != RobotBase.mode.kTest:
+            if self.__lastMode != mode.kTest:
                 self.testInit()
-                self.__lastMode = RobotBase.mode.kTest
+                self.__lastMode = mode.kTest
             self.testPeriodic()
 
         self.robotPeriodic()
