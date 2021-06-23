@@ -1,4 +1,4 @@
-import logging
+import logging, coloredlogs
 from enum import Enum
 from . import TimedRobot
 
@@ -13,8 +13,8 @@ class RobotBase():
 
     __enabled = False
 
-    FORMAT = '%(asctime)s %(levelname)s: %(message)s'
-    logging.basicConfig(level=logging.DEBUG, format=FORMAT)
+    FORMAT = '%(asctime)s %(hostname)s %(levelname)s %(message)s'
+    coloredlogs.install(level='DEBUG', fmt=FORMAT)
 
     def getMode(self):
         return mode.kNone
