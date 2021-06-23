@@ -1,5 +1,6 @@
 from .RobotBase import RobotBase
 from .RobotBase import mode
+from .Watchdog import Watchdog
 import logging
 import time
 
@@ -97,29 +98,46 @@ class IterativeRobotBase(RobotBase):
 
     """----------- Internal functions code -----------------"""
 
+    def __init__(self, period):
+        self.__period = period
+        self.__watchdog = Watchdog(period, lambda: self.__printLoopOverrunMessage())
+
     def loopFunc(self):
+        self.__watchdog.reset()
+
         if self.isDisabled():
             if self.__lastMode != mode.kDisabled:
                 self.disabledInit()
                 self.__lastMode = mode.kDisabled
             self.disabledPeriodic()
+            self.__watchdog.addEpoch('disabledPeriodic()')
         elif self.isAutonomous():
             if self.__lastMode != mode.kAutonomous:
                 self.autonomousInit()
                 self.__lastMode = mode.kAutonomous
             self.autonomousPeriodic()
+            self.__watchdog.addEpoch('autonomousPeriodic()')
         elif self.isTeleoperation():
             if self.__lastMode != mode.kTeleop:
                 self.teleopInit()
                 self.__lastMode = mode.kTeleop
             self.teleopPeriodic()
+            self.__watchdog.addEpoch('teleopPeriodic()')
         elif self.isTest():
             if self.__lastMode != mode.kTest:
                 self.testInit()
                 self.__lastMode = mode.kTest
             self.testPeriodic()
+            self.__watchdog.addEpoch('testPeriodic()')
 
         self.robotPeriodic()
+        self.__watchdog.addEpoch('robotPeriodic()')
 
         if self.isSimulation():
             self.simulationPeriodic()
+
+        self.__watchdog.schedulerFunc()
+
+    def __printLoopOverrunMessage(self):
+        # logging.warning('Loop time of ' + str(self.__period) + 's overrun')
+        pass

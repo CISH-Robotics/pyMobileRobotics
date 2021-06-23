@@ -26,6 +26,8 @@ class Robot(pyMobileRobotics.TimedRobot):
         # pyMobileRobotics.logging.debug(round(time.perf_counter() - self.lastTime, 3))
         self.lastTime = time.perf_counter()
 
+        time.sleep(1)
+
     def disabledInit(self):
         """
         該函數將在機器人進入禁能狀態時運行一次
