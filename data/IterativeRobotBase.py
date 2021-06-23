@@ -34,7 +34,7 @@ import time
 """
 class IterativeRobotBase(RobotBase.RobotBase):
 
-    ____lastMode = RobotBase.mode.kNone
+    __lastMode = RobotBase.mode.kNone
 
     def robotInit(self):
         logging.info("Default robotInit() method... Override me!")
@@ -93,8 +93,28 @@ class IterativeRobotBase(RobotBase.RobotBase):
     __lastTime = time.time()
     def loopFunc(self):
 
-        logging.debug(round(time.time() - self.__lastTime, 3))
-        self.__lastTime = time.time()
+        if self.isDisabled():
+            if self.__lastMode != RobotBase.mode.kDisabled:
+                self.disabledInit()
+                self.__lastMode = RobotBase.mode.kDisabled
+            self.disabledPeriodic()
+        elif self.isAutonomous():
+            if self.__lastMode != RobotBase.mode.kAutonomous:
+                self.autonomousInit()
+                self.__lastMode = RobotBase.mode.kAutonomous
+            self.autonomousPeriodic()
+        elif self.isTeleoperation():
+            if self.__lastMode != RobotBase.mode.kTeleop:
+                self.teleopInit()
+                self.__lastMode = RobotBase.mode.kTeleop
+            self.teleopPeriodic()
+        elif self.isTest():
+            if self.__lastMode != RobotBase.mode.kTest:
+                self.testInit()
+                self.__lastMode = RobotBase.mode.kTest
+            self.testPeriodic()
 
-        if super().isDisabled():
-            logging.info("Disabled")
+        self.robotPeriodic()
+
+        if self.isSimulation():
+            self.simulationPeriodic()

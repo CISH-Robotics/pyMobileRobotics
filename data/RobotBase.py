@@ -23,10 +23,13 @@ class RobotBase():
         return self.__enabled
 
     def isDisabled(self):
-        return not(self.getEnabled)
+        return not(self.getEnabled())
 
     def isEnabled(self):
-        return self.getEnabled
+        return self.getEnabled()
+
+    def isSimulation(self):
+        return False
 
     def isTeleoperation(self):
         return self.getMode() == mode.kTeleop
@@ -38,4 +41,6 @@ class RobotBase():
         return self.getMode() == mode.kTest
 
     def startRobot(robot):
+        logging.info('********** Robot program starting **********')
+
         robot.startCompetition()
