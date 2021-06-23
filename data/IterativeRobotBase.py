@@ -90,7 +90,6 @@ class IterativeRobotBase(RobotBase.RobotBase):
             logging.info("Default testPeriodic() method.. Override me!")
             self.__tmpFirstRun = False
 
-    __lastTime = time.time()
     def loopFunc(self):
 
         if self.isDisabled():

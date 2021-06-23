@@ -17,7 +17,10 @@ class TimedRobot(IterativeRobotBase.IterativeRobotBase):
         if self.isSimulation():
             self.simulationInit()
 
+        __expirationTime = 0
+
         timer = Timer(interval=self.__period)
         while True:
+            __expirationTime += self.__period
             self.loopFunc()
             timer.checkpt()

@@ -1,6 +1,7 @@
+from . import TimedRobot
+from enum import Enum
 import coloredlogs
 import logging
-from enum import Enum
 
 
 class mode(Enum):
@@ -42,6 +43,11 @@ class RobotBase():
         return self.getMode() == mode.kTest
 
     @staticmethod
-    def startRobot(robot):
+    def startRobot(robot: TimedRobot):
+        """startRobot
+
+        Args:
+            robot (TimedRobot)
+        """
         logging.info('********** Robot program starting **********')
         robot.startCompetition()
