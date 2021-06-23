@@ -1,3 +1,3 @@
 @echo off
-twine upload dist/*
+twine upload dist/* --skip-existing
 pause
