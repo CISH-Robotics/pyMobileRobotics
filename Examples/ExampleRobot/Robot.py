@@ -23,10 +23,10 @@ class Robot(pyMobileRobotics.TimedRobot):
 
         Tips:該函數會在各模式的迴圈之後運行
         """
-        # pyMobileRobotics.logging.debug(round(time.perf_counter() - self.lastTime, 3))
+        pyMobileRobotics.logging.debug('{:.3f}'.format(time.perf_counter() - self.lastTime))
         self.lastTime = time.perf_counter()
 
-        time.sleep(1)
+        # time.sleep(1)
 
     def disabledInit(self):
         """

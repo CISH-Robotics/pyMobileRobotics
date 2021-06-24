@@ -2,7 +2,7 @@
 # website:	https://github.com/CISH-Robotics/
 
 # set the version number
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 # import the necessary packages
 import importlib

@@ -14,8 +14,8 @@ class RobotBase():
 
     __enabled = False
 
-    FORMAT = '%(asctime)s %(hostname)s %(levelname)s %(message)s'
-    coloredlogs.install(level='DEBUG', fmt=FORMAT)
+    __LOG_FORMAT = '%(asctime)s %(hostname)s %(levelname)s %(message)s'
+    coloredlogs.install(level='DEBUG', fmt=__LOG_FORMAT)
 
     def getMode(self):
         return mode.kNone
@@ -45,8 +45,8 @@ class RobotBase():
     def startRobot(robot):
         """startRobot
 
-        Args:
-            robot (TimedRobot)
+        :param robot: [description]
+        :type robot: [type]
         """
         logging.info('********** Robot program starting **********')
         robot.startCompetition()

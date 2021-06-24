@@ -6,8 +6,7 @@ import pyMobileRobotics
 import Robot
 
 def main():
-    robot = Robot.Robot()
-    pyMobileRobotics.RobotBase.startRobot(robot)
+    pyMobileRobotics.RobotBase.startRobot(Robot.Robot())
 
 if __name__ == '__main__':
     main()
