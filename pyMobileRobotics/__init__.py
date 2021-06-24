@@ -10,6 +10,7 @@ import os
 import sys
 
 from . import *
+from . import CommandScheduler
 from .RobotBase import logging
 from .RobotBase import RobotBase
 from .IterativeRobotBase import IterativeRobotBase
