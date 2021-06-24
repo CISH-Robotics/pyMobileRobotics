@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='pyMobileRobotics',
-      version='0.0.2',
+      version='0.0.3',
       description='WorldSkills Mobile Robotics System',
       author='CISH Robotics',
       author_email='crt@cish.xyz',

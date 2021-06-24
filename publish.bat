@@ -1,3 +1,3 @@
 @echo off
-twine upload dist/* --skip-existing
+twine upload dist/*.whl --skip-existing
 pause
