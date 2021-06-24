@@ -43,10 +43,10 @@ class RobotBase():
 
     @staticmethod
     def startRobot(robot):
-        """startRobot
+        """startRobot [summary]
 
-        :param robot: [description]
-        :type robot: [type]
+        Args:
+            robot ([type]): [description]
         """
         logging.info('********** Robot program starting **********')
         robot.startCompetition()
