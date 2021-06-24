@@ -1,4 +1,5 @@
 from enum import Enum
+from .TimedRobot import TimedRobot
 import coloredlogs
 import logging
 
@@ -15,7 +16,7 @@ class RobotBase():
     __enabled = False
 
     __LOG_FORMAT = '%(asctime)s %(hostname)s %(levelname)s %(message)s'
-    coloredlogs.install(level='DEBUG', fmt=__LOG_FORMAT)
+    coloredlogs.install('DEBUG', __LOG_FORMAT)
 
     def getMode(self):
         return mode.kNone
@@ -42,11 +43,11 @@ class RobotBase():
         return self.getMode() == mode.kTest
 
     @staticmethod
-    def startRobot(robot):
-        """startRobot [summary]
+    def startRobot(robot: TimedRobot):
+        """startRobot
 
         Args:
-            robot ([type]): [description]
+            robot (TimedRobot)
         """
         logging.info('********** Robot program starting **********')
         robot.startCompetition()
