@@ -5,7 +5,6 @@ import time
 
 class TimedRobot(IterativeRobotBase):
 
-
     def __init__(self, period=0.02):
         self.__period = period
         super().__init__(period)

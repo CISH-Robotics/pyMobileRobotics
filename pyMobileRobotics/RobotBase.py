@@ -47,7 +47,7 @@ class RobotBase():
         """startRobot
 
         Args:
-            robot (TimedRobot): [description]
+            robot (TimedRobot): TimedRobot
         """
         logging.info('********** Robot program starting **********')
         robot.startCompetition()
