@@ -1,3 +1,4 @@
+from setuptools import find_packages
 from setuptools import setup
 
 setup(name='pyMobileRobotics',
@@ -10,7 +11,7 @@ setup(name='pyMobileRobotics',
       project_urls={
             'Source': 'https://github.com/CISH-Robotics/pyMobileRobotics',
       },
-      packages=['pyMobileRobotics'],
+      packages=find_packages(),
       install_requires=[
             'oclock>=1.3.0',
             'coloredlogs>=15.0.1',
