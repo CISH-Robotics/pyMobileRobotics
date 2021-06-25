@@ -1,4 +1,4 @@
-from pyMobileRobotics.command.Command import Command
+from pyMobileRobotics.command.command import Command
 
 class CommandBase(Command):
 

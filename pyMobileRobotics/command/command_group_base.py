@@ -1,5 +1,5 @@
-from command.CommandBase import CommandBase
-from command.Command import Command
+from pyMobileRobotics.command.command_base import CommandBase
+from pyMobileRobotics.command.command import Command
 
 class CommandGroupBase(CommandBase):
     """

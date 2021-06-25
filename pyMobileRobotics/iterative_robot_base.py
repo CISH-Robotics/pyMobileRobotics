@@ -1,6 +1,6 @@
-from .RobotBase import RobotBase
-from .RobotBase import mode
-from .Watchdog import Watchdog
+from pyMobileRobotics.robot_base import RobotBase
+from pyMobileRobotics.robot_base import Mode
+from pyMobileRobotics.watchdog import Watchdog
 import logging
 import time
 
@@ -36,7 +36,7 @@ class IterativeRobotBase(RobotBase):
     - testPeriodic()
     """
 
-    __lastMode = mode.kNone
+    __lastMode = Mode.kNone
 
     """----------- Overridable initialization code -----------------"""
 
@@ -106,27 +106,27 @@ class IterativeRobotBase(RobotBase):
         self.__watchdog.reset()
 
         if self.isDisabled():
-            if self.__lastMode != mode.kDisabled:
+            if self.__lastMode != Mode.kDisabled:
                 self.disabledInit()
-                self.__lastMode = mode.kDisabled
+                self.__lastMode = Mode.kDisabled
             self.disabledPeriodic()
             self.__watchdog.addEpoch('disabledPeriodic()')
         elif self.isAutonomous():
-            if self.__lastMode != mode.kAutonomous:
+            if self.__lastMode != Mode.kAutonomous:
                 self.autonomousInit()
-                self.__lastMode = mode.kAutonomous
+                self.__lastMode = Mode.kAutonomous
             self.autonomousPeriodic()
             self.__watchdog.addEpoch('autonomousPeriodic()')
         elif self.isTeleoperation():
-            if self.__lastMode != mode.kTeleop:
+            if self.__lastMode != Mode.kTeleop:
                 self.teleopInit()
-                self.__lastMode = mode.kTeleop
+                self.__lastMode = Mode.kTeleop
             self.teleopPeriodic()
             self.__watchdog.addEpoch('teleopPeriodic()')
         elif self.isTest():
-            if self.__lastMode != mode.kTest:
+            if self.__lastMode != Mode.kTest:
                 self.testInit()
-                self.__lastMode = mode.kTest
+                self.__lastMode = Mode.kTest
             self.testPeriodic()
             self.__watchdog.addEpoch('testPeriodic()')
 

@@ -1,6 +1,6 @@
-from command.Command import Command
-from command.CommandState import CommandState
-from command.SubSystem import SubSystem
+from pyMobileRobotics.command.command import Command
+from pyMobileRobotics.command.command_state import CommandState
+from pyMobileRobotics.command.subsystem import SubSystem
 
 
 class CommandScheduler():
@@ -18,13 +18,13 @@ class CommandScheduler():
     def __init__(self):
         pass
 
-    def __initCommand(self, command: Command, interruptible: bool, requirements: set):
-        """initCommand 初始化命令一個指定命令，添加其需要至清單中，並初始化該動作
+    def __initCommand(self, command: Command, interruptible: bool, requirements: set[SubSystem]):
+        """__initCommand 初始化命令一個指定命令，添加其需要至清單中，並初始化該動作
 
         Args:
             command (Command): 需要初始化的命令
             interruptible (bool): 該命令是否支持打斷
-            requirements (set): 該令命的需要
+            requirements (set[SubSystem]): 該令命的需要
         """
         __commandName = self.__getCommandName(command)
         command.initialize()

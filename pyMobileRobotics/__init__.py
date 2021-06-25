@@ -9,11 +9,9 @@ import importlib
 import os
 import sys
 
-from . import *
-from .command import *
-from .command.CommandBase import CommandBase
-from .command.CommandScheduler import CommandScheduler
-from .RobotBase import logging
-from .RobotBase import RobotBase
-from .IterativeRobotBase import IterativeRobotBase
-from .TimedRobot import TimedRobot
+from pyMobileRobotics.command.command_base import CommandBase
+from pyMobileRobotics.command.command_scheduler import CommandScheduler
+from pyMobileRobotics.robot_base import RobotBase
+from pyMobileRobotics.iterative_robot_base import IterativeRobotBase
+from pyMobileRobotics.timed_robot import TimedRobot
+from pyMobileRobotics.watchdog import WatchDog

@@ -1,4 +1,4 @@
-from ..Timer import Timer
+from pyMobileRobotics.timer import Timer
 
 class CommandState():
     """保存命令調度狀態的類。"""

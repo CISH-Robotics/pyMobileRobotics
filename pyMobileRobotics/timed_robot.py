@@ -1,4 +1,4 @@
-from .IterativeRobotBase import IterativeRobotBase
+from pyMobileRobotics.iterative_robot_base import IterativeRobotBase
 from oclock import Timer
 import time
 
