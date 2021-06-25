@@ -23,7 +23,7 @@ class Watchdog():
         self.__startTime = self.__getTime()
         self.__epochs = {}
 
-    #TODO 應改為多線程呼叫，應改為私有
+    #TODO 應改為多線程呼叫，應改為私有。
     def schedulerFunc(self):
         __timedOut = False
         for epoch in self.__epochs:

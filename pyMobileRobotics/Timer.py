@@ -1,5 +1,6 @@
 import time
 
+
 class Timer():
 
     @staticmethod
