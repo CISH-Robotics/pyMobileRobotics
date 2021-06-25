@@ -3,10 +3,7 @@
 # ----------------------------------------------------------------------------
 
 import pyMobileRobotics
-import Robot
+from . import robot
 
-def main():
-    pyMobileRobotics.RobotBase.startRobot(Robot.Robot())
 
-if __name__ == '__main__':
-    main()
+pyMobileRobotics.RobotBase.startRobot(robot.Robot())
