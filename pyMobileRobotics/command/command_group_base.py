@@ -11,8 +11,9 @@ class CommandGroupBase(CommandBase):
 
     @staticmethod
     def registerGroupedCommands(*commands: Command):
-        __commands = commands.set(commands)
-        CommandGroupBase.__groupedCommands.append(__commands)
+        for command in commands:
+            __command_name = command.__class__.__name__
+            CommandGroupBase.__groupedCommands.add(__command_name)
 
     @staticmethod
     def clearGroupedCommands():

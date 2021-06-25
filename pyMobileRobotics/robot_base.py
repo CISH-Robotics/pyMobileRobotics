@@ -1,49 +1,39 @@
-from pyMobileRobotics.timed_robot import TimedRobot
+from pyMobileRobotics.robot_state import RobotState
 from enum import Enum
 import coloredlogs
 import logging
 
-
-class Mode(Enum):
-    kNone = 0
-    kDisabled = 1
-    kAutonomous = 2
-    kTeleop = 3
-    kTest = 4
-
 class RobotBase():
 
-    __enabled = False
-
     __LOG_FORMAT = '%(asctime)s %(hostname)s %(levelname)s %(message)s'
-    coloredlogs.install('DEBUG', __LOG_FORMAT)
+    coloredlogs.install(level='DEBUG', fmt=__LOG_FORMAT)
 
     def getMode(self):
-        return Mode.kNone
+        return RobotState.getMode()
 
     def getEnabled(self):
-        return self.__enabled
+        return RobotState.getEnabled()
 
     def isDisabled(self):
-        return not(self.getEnabled())
+        return RobotState.isDisabled()
 
     def isEnabled(self):
-        return self.getEnabled()
+        return RobotState.isEnabled()
 
     def isSimulation(self):
-        return False
+        return RobotState.isSimulation()
 
     def isTeleoperation(self):
-        return self.getMode() == Mode.kTeleop
+        return RobotState.isTeleoperation()
 
     def isAutonomous(self):
-        return self.getMode() == Mode.kAutonomous
+        return RobotState.isSimulation()
 
     def isTest(self):
-        return self.getMode() == Mode.kTest
+        return RobotState.isTest()
 
     @staticmethod
-    def startRobot(robot: TimedRobot):
+    def startRobot(robot):
         """startRobot
 
         Args:
