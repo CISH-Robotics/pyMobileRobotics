@@ -34,7 +34,8 @@ class RobotBase():
 
     @staticmethod
     def startRobot(robot):
-        """startRobot
+        """
+        啟動機器人
 
         Args:
             robot (TimedRobot): TimedRobot
