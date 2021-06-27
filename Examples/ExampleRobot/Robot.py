@@ -19,6 +19,8 @@ class Robot(pyMobileRobotics.TimedRobot):
         該函數將在機器人程序初次啟動時運行
         """
         pyMobileRobotics.logging.debug('TEST')
+        pyMobileRobotics.CommandScheduler.getInstance().enable()
+        pyMobileRobotics.RobotState.setAutonomous()
 
     lastTime = time.time()
     def robotPeriodic(self):
@@ -27,10 +29,7 @@ class Robot(pyMobileRobotics.TimedRobot):
 
         Tips:該函數會在各模式的迴圈之後運行
         """
-        pyMobileRobotics.logging.debug('{:.3f}'.format(time.perf_counter() - self.lastTime))
-        self.lastTime = time.perf_counter()
-
-        # time.sleep(1)
+        pyMobileRobotics.CommandScheduler.getInstance().run()
 
     def disabledInit(self):
         """
@@ -48,6 +47,7 @@ class Robot(pyMobileRobotics.TimedRobot):
         """
         該函數將在機器人進入自動模式時運行一次
         """
+        self.__robot_container.exampleCommand.schedule()
         pass
 
     def autonomousPeriodic(self):
