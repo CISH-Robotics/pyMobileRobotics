@@ -1,5 +1,6 @@
 from pyMobileRobotics.robot_base import RobotBase
 from pyMobileRobotics.robot_state import Mode
+from pyMobileRobotics.robot_state import RobotState
 from pyMobileRobotics.watchdog import Watchdog
 import logging
 import time
@@ -105,25 +106,25 @@ class IterativeRobotBase(RobotBase):
     def loopFunc(self):
         self.__watchdog.reset()
 
-        if self.isDisabled():
+        if RobotState.isDisabled():
             if self.__lastMode != Mode.kDisabled:
                 self.disabledInit()
                 self.__lastMode = Mode.kDisabled
             self.disabledPeriodic()
             self.__watchdog.addEpoch('disabledPeriodic()')
-        elif self.isAutonomous():
+        elif RobotState.isAutonomous():
             if self.__lastMode != Mode.kAutonomous:
                 self.autonomousInit()
                 self.__lastMode = Mode.kAutonomous
             self.autonomousPeriodic()
             self.__watchdog.addEpoch('autonomousPeriodic()')
-        elif self.isTeleoperation():
+        elif RobotState.isTeleoperation():
             if self.__lastMode != Mode.kTeleop:
                 self.teleopInit()
                 self.__lastMode = Mode.kTeleop
             self.teleopPeriodic()
             self.__watchdog.addEpoch('teleopPeriodic()')
-        elif self.isTest():
+        elif RobotState.isTest():
             if self.__lastMode != Mode.kTest:
                 self.testInit()
                 self.__lastMode = Mode.kTest
@@ -133,7 +134,7 @@ class IterativeRobotBase(RobotBase):
         self.robotPeriodic()
         self.__watchdog.addEpoch('robotPeriodic()')
 
-        if self.isSimulation():
+        if RobotState.isSimulation():
             self.simulationPeriodic()
 
         self.__watchdog.schedulerFunc()

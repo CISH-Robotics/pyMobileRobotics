@@ -12,14 +12,15 @@ class RobotState():
     """保存機器人狀態和模式的類"""
 
     __enabled = False
+    __mode = Mode.kNone
 
     @staticmethod
     def getMode():
-        return Mode.kNone
+        return RobotState.__mode
 
     @staticmethod
     def getEnabled():
-        return RobotState.__enabled
+        return True if RobotState.getMode() != Mode.kNone and RobotState.getMode() != Mode.kDisabled else False
 
     @staticmethod
     def isDisabled():
@@ -35,12 +36,28 @@ class RobotState():
 
     @staticmethod
     def isTeleoperation():
-        return RobotState.getMode() == Mode.kTeleop
+        return True if RobotState.__mode == Mode.kTeleop else False
 
     @staticmethod
     def isAutonomous():
-        return RobotState.getMode() == Mode.kAutonomous
+        return True if RobotState.__mode == Mode.kAutonomous else False
 
     @staticmethod
     def isTest():
-        return RobotState.getMode() == Mode.kTest
+        return True if RobotState.__mode == Mode.kTest else False
+
+    @staticmethod
+    def __setMode(mode: Mode):
+        RobotState.__mode = mode
+
+    @staticmethod
+    def setTeleoperation():
+        RobotState.__setMode(Mode.kTeleop)
+
+    @staticmethod
+    def setAutonomous():
+        RobotState.__setMode(Mode.kAutonomous)
+
+    @staticmethod
+    def setTest():
+        RobotState.__setMode(Mode.kTest)

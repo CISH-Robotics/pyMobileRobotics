@@ -1,17 +1,18 @@
-from pyMobileRobotics.command.command import Command
 from pyMobileRobotics.command.command_state import CommandState
-from pyMobileRobotics.command.command_group_base import CommandGroupBase
-from pyMobileRobotics.command.subsystem import SubSystem
+# from pyMobileRobotics.command.command_group_base import CommandGroupBase
+from pyMobileRobotics.command.subsystem import Subsystem
 from pyMobileRobotics.robot_state import RobotState
 from pyMobileRobotics.util import Util
 
 
 class CommandScheduler():
 
+    __disabled = False
     __instance = None
-    __subsytems = set()
+    __subsystems = set()
     __scheduledCommands = {}
     __requirements = {}
+    __inRunLoop = False
     __toSchedule = set()
     __toCancel = set()
 
@@ -24,7 +25,7 @@ class CommandScheduler():
     def __init__(self):
         pass
 
-    def __initCommand(self, command: Command, interruptible: bool, requirements: set[SubSystem]):
+    def __initCommand(self, command, interruptible: bool, requirements: set[Subsystem]):
         """
         始化命令一個指定命令，添加其需要至清單中，並初始化該動作
 
@@ -36,12 +37,12 @@ class CommandScheduler():
         __commandName = command.getName()
         command.initialize()
         # scheduledCommand = CommandState(interruptible)
-        self.__scheduledCommands[__commandName] = [command, interruptible]
+        self.__scheduledCommands[__commandName] = {'command': command, 'interruptible': interruptible}
         for requirement in requirements:
             __requirementName = requirement.getName()
             self.__requirements[__requirementName] = command
 
-    def schedule(self, command: Command, interruptible=True):
+    def schedule(self, command, interruptible=True):
         """
         調度執行命令。 如果命令已被調度，則不執行任何操作。 如果命令的要求不可用，
         則只有當前使用這些要求的所有命令都被安排為可打斷時才會啟動。
@@ -59,8 +60,8 @@ class CommandScheduler():
             self.__toSchedule.add(command)
             return
 
-        if __commandName in CommandGroupBase.getGroupedCommands():
-            raise ValueError('A command that is part of a command group cannot be independently scheduled')
+        # if __commandName in CommandGroupBase.getGroupedCommands():
+        #     raise ValueError('A command that is part of a command group cannot be independently scheduled')
 
         # 如果調度器被禁用，機器人被禁用並且命令在禁用時不運行，
         # 或者命令已經被調度，則不執行任何操作。
@@ -94,13 +95,14 @@ class CommandScheduler():
 
         # 運行已註冊的子系統
         for subsystem in self.__subsystems:
-            subsystem.execute()
+            subsystem.periodic()
 
         # 上鎖
         self.__inRunLoop = True
         # 操作已註冊的命令
-        for command, interruptible in self.__scheduledCommands.items():
-            __commandName = command.getName()
+        for commandName, scheduledCommand in self.__scheduledCommands.items():
+            command = scheduledCommand['command']
+            interruptible = scheduledCommand['interruptible']
 
             # 如果命令不支持在禁用狀態下運行且當前機器人為禁用狀態，則取消註冊並中斷該命令
             if not(command.runsWhenDisabled()) and RobotState.isDisabled():
@@ -108,7 +110,7 @@ class CommandScheduler():
                 for reqSubsystem, reqCommand in self.__requirements.items():
                     if reqCommand == command:
                         del self.__requirements[reqSubsystem]
-                del self.__scheduledCommands[__commandName]
+                del self.__scheduledCommands[commandName]
                 continue
 
             # 運行命令
@@ -136,16 +138,16 @@ class CommandScheduler():
         self.__toSchedule.clear()
         self.__toCancel.clear()
 
-    def registerSubsystem(self, *subsystems: SubSystem):
+    def registerSubsystem(self, *subsystems: Subsystem):
         """
         註冊子系統
 
         Args:
             *subsystems (SubSystem): 要註冊的子系統
         """
-        self.__subsytems.update(subsystems)
+        self.__subsystems.update(subsystems)
 
-    def unregisterSubsystem(self, *subsystems: SubSystem):
+    def unregisterSubsystem(self, *subsystems: Subsystem):
         """
         取消註冊子系統
 
@@ -153,9 +155,9 @@ class CommandScheduler():
             *subsystems (SubSystem): 要取消註冊的子系統
         """
         for subsystem in subsystems:
-            self.__subsytems.remove(subsystem)
+            self.__subsystems.remove(subsystem)
 
-    def cancel(self, *commands: Command):
+    def cancel(self, *commands):
         """
         取消命令
 

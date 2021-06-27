@@ -1,7 +1,7 @@
-from pyMobileRobotics.command.subsystem import SubSystem
+from pyMobileRobotics.command.subsystem import Subsystem
 from pyMobileRobotics.command.command_scheduler import CommandScheduler
 
-class SubSystemBase(SubSystem):
+class SubsystemBase(Subsystem):
 
     def __init__(self):
         self.__name = super().getName()

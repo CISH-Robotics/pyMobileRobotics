@@ -1,5 +1,5 @@
 from pyMobileRobotics.command.command import Command
-from pyMobileRobotics.command.subsystem import SubSystem
+from pyMobileRobotics.command.subsystem import Subsystem
 
 class CommandBase(Command):
 
@@ -11,7 +11,7 @@ class CommandBase(Command):
     def getName(self):
         return self.__name
 
-    def addRequirements(self, requirements: set[SubSystem]):
+    def addRequirements(self, requirements: set[Subsystem]):
         """
         添加指定的要求至命令
 
