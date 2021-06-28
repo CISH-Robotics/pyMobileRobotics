@@ -1,6 +1,6 @@
 from pyMobileRobotics.robot_base import RobotBase
-from pyMobileRobotics.robot_state import Mode
 from pyMobileRobotics.robot_state import RobotState
+from pyMobileRobotics.robot_state import Mode
 from pyMobileRobotics.watchdog import Watchdog
 import logging
 import time

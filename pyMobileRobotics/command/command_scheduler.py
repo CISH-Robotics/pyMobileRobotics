@@ -1,8 +1,5 @@
-from pyMobileRobotics.command.command_state import CommandState
-# from pyMobileRobotics.command.command_group_base import CommandGroupBase
-from pyMobileRobotics.command.subsystem import Subsystem
-from pyMobileRobotics.robot_state import RobotState
 from pyMobileRobotics.util import Util
+from pyMobileRobotics.robot_state import RobotState
 
 
 class CommandScheduler():
@@ -25,7 +22,7 @@ class CommandScheduler():
     def __init__(self):
         pass
 
-    def __initCommand(self, command, interruptible: bool, requirements: set[Subsystem]):
+    def __initCommand(self, command, interruptible: bool, requirements: set):
         """
         始化命令一個指定命令，添加其需要至清單中，並初始化該動作
 
@@ -36,7 +33,6 @@ class CommandScheduler():
         """
         __commandName = command.getName()
         command.initialize()
-        # scheduledCommand = CommandState(interruptible)
         self.__scheduledCommands[__commandName] = {'command': command, 'interruptible': interruptible}
         for requirement in requirements:
             __requirementName = requirement.getName()
@@ -122,7 +118,7 @@ class CommandScheduler():
                 for reqSubsystem, reqCommand in self.__requirements.items():
                     if reqCommand == command:
                         del self.__requirements[reqSubsystem]
-                del self.__scheduledCommands[__commandName]
+                del self.__scheduledCommands[commandName]
         # 解鎖
         self.__inRunLoop = False
 
@@ -138,21 +134,21 @@ class CommandScheduler():
         self.__toSchedule.clear()
         self.__toCancel.clear()
 
-    def registerSubsystem(self, *subsystems: Subsystem):
+    def registerSubsystem(self, *subsystems):
         """
         註冊子系統
 
         Args:
-            *subsystems (SubSystem): 要註冊的子系統
+            subsystems... (Subsystem): 要註冊的子系統
         """
         self.__subsystems.update(subsystems)
 
-    def unregisterSubsystem(self, *subsystems: Subsystem):
+    def unregisterSubsystem(self, *subsystems):
         """
         取消註冊子系統
 
         Args:
-            *subsystems (SubSystem): 要取消註冊的子系統
+            subsystems... (Subsystem): 要取消註冊的子系統
         """
         for subsystem in subsystems:
             self.__subsystems.remove(subsystem)
@@ -162,7 +158,7 @@ class CommandScheduler():
         取消命令
 
         Args:
-            *commands (Command): 要取消的命令
+            commands... (Command): 要取消的命令
         """
         if self.__inRunLoop:
             for command in commands:

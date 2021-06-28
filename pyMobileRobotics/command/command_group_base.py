@@ -1,5 +1,4 @@
 from pyMobileRobotics.command.command_base import CommandBase
-from pyMobileRobotics.command.command import Command
 
 class CommandGroupBase(CommandBase):
     """
@@ -10,7 +9,7 @@ class CommandGroupBase(CommandBase):
     __groupedCommands = set()
 
     @staticmethod
-    def registerGroupedCommands(*commands: Command):
+    def registerGroupedCommands(*commands):
         for command in commands:
             __command_name = command.__class__.__name__
             CommandGroupBase.__groupedCommands.add(__command_name)
@@ -25,19 +24,19 @@ class CommandGroupBase(CommandBase):
         CommandGroupBase.__groupedCommands = set()
 
     @staticmethod
-    def clearGroupedCommand(command: Command):
+    def clearGroupedCommand(command):
         """clearGroupedCommand
         從分組命令列表中刪除單個命令，使其可以再次自由使用。
 
         **警告：隨意使用它會導致意外/不良行為。 除非你完全理解你在做什麼，否則不要使用它。**
 
         Args:
-            command (Command): 要從分組命令列表中刪除的命令
+            command... (Command): 要從分組命令列表中刪除的命令
         """
         CommandGroupBase.__groupedCommands.remove(command)
 
     @staticmethod
-    def requireUngrouped(*commands: Command):
+    def requireUngrouped(*commands):
         for command in commands:
             if CommandGroupBase.__groupedCommands.isdisjoint(command):
                 raise ValueError("Commands cannot be added to more than one CommandGroup")
@@ -46,21 +45,21 @@ class CommandGroupBase(CommandBase):
     def getGroupedCommands():
         return CommandGroupBase.__groupedCommands
 
-    def addCommands(self, *commands: Command):
+    def addCommands(self, *commands):
         pass
 
     @staticmethod
-    def sequence(self, *commands: Command):
+    def sequence(self, *commands):
         pass
 
     @staticmethod
-    def parallel(self, *commands: Command):
+    def parallel(self, *commands):
         pass
 
     @staticmethod
-    def race(self, *commands: Command):
+    def race(self, *commands):
         pass
 
     @staticmethod
-    def deadline(self, *commands: Command):
+    def deadline(self, *commands):
         pass

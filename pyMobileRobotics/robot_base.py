@@ -1,4 +1,5 @@
 from pyMobileRobotics.robot_state import RobotState
+from pyMobileRobotics.hal.hal import HAL
 from enum import Enum
 import coloredlogs
 import logging
@@ -38,7 +39,9 @@ class RobotBase():
         啟動機器人
 
         Args:
-            robot (TimedRobot): TimedRobot
+            robot ([type]): 機器人程序
         """
+        logging.info('********* VMX-HAL library starting *********')
+        HAL.getVMX()
         logging.info('********** Robot program starting **********')
         robot.startCompetition()

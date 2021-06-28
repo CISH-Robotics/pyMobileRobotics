@@ -1,4 +1,3 @@
-from pyMobileRobotics.command.subsystem import Subsystem
 from pyMobileRobotics.command.command_scheduler import CommandScheduler
 
 
@@ -22,7 +21,7 @@ class Command():
         或命令被打斷時執行。
 
         Args:
-            interrupted (bool): 命令是否被打斷
+            interrupted (bool): 命令是否被打斷?
         """
         pass
 
@@ -39,10 +38,10 @@ class Command():
     def getName(self) -> str:
         return self.__class__.__name__
 
-    def addRequirements(self, requirements: set[Subsystem]):
+    def addRequirements(self, requirements: set):
         pass
 
-    def getRequirements(self) -> set[Subsystem]:
+    def getRequirements(self) -> set:
         pass
 
     def runsWhenDisabled(self) -> bool:
