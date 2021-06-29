@@ -34,14 +34,17 @@ class RobotBase():
         return RobotState.isTest()
 
     @staticmethod
-    def startRobot(robot):
+    def startRobot(robot, simulation=False):
         """
         啟動機器人
 
         Args:
-            robot ([type]): 機器人程序
+            robot (RobotBase): 機器人程序
+            simulation (bool, optional): 啟用模擬。 Defaults to False.
         """
-        logging.info('********* VMX-HAL library starting *********')
-        HAL.getVMX()
+        RobotState.setSimulation(simulation)
+        if not(simulation):
+            logging.info('********* VMX-HAL library starting *********')
+            HAL.getVMX()
         logging.info('********** Robot program starting **********')
         robot.startCompetition()

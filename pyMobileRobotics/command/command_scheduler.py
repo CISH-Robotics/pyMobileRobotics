@@ -1,5 +1,6 @@
 from pyMobileRobotics.util import Util
 from pyMobileRobotics.robot_state import RobotState
+import logging
 
 
 class CommandScheduler():
@@ -9,6 +10,7 @@ class CommandScheduler():
     __subsystems = set()
     __scheduledCommands = {}
     __requirements = {}
+    __requirementsTest = {}
     __inRunLoop = False
     __toSchedule = set()
     __toCancel = set()
@@ -31,12 +33,11 @@ class CommandScheduler():
             interruptible (bool): 該命令是否支持打斷
             requirements (set[SubSystem]): 該令命的需要
         """
-        __commandName = command.getName()
         command.initialize()
-        self.__scheduledCommands[__commandName] = {'command': command, 'interruptible': interruptible}
-        for requirement in requirements:
-            __requirementName = requirement.getName()
-            self.__requirements[__requirementName] = command
+        self.__scheduledCommands[command] = {'interruptible': interruptible}
+        for subsystem in requirements:
+            self.__requirements[subsystem] = command
+            self.__requirementsTest[subsystem] = command
 
     def schedule(self, command, interruptible=True):
         """
@@ -51,7 +52,6 @@ class CommandScheduler():
         Raises:
             ValueError: 不能獨立調度屬於命令組的命令
         """
-        __commandName = command.getName()
         if self.__inRunLoop:
             self.__toSchedule.add(command)
             return
@@ -63,31 +63,32 @@ class CommandScheduler():
         # 或者命令已經被調度，則不執行任何操作。
         if (self.__disabled
             or (RobotState.isDisabled() and not(command.runsWhenDisabled()))
-            or __commandName in self.__scheduledCommands.keys()):
+            or command in self.__scheduledCommands.keys()):
             return
 
         __requirements = command.getRequirements()
 
         # 如果當前未使用要求，則安排命令。
-        if not(Util.dictsDisjoint(self.__requirements, list(__requirements))):
+        if not(Util.listsDisjoint(self.__requirements.keys(), list(__requirements))):
             self.__initCommand(command, interruptible, __requirements)
         else:
             # 否則檢查正在使用的需求是否都有可中斷的命令，
             # 如果有，則中斷這些命令並調度新命令。
             for subsystem in __requirements:
-                __subsystemName = subsystem.getName()
-                if (__subsystemName in self.__requirements.keys()
-                    and not(self.__requirements[__subsystemName].isInterruptible())):
+                if (subsystem in self.__requirements.keys()
+                    and not(self.__scheduledCommands[self.__requirements[subsystem]]['interruptible'])):
                     return
             for subsystem in __requirements:
-                __subsystemName = subsystem.getName()
-                self.cancel(self.__requirements[__subsystemName])
+                self.cancel(self.__requirements[subsystem])
             self.__initCommand(command, interruptible, __requirements)
 
     def run(self):
         # 如果調度器為禁用則跳過
         if self.__disabled:
             return
+
+        for requireSubsystem, requireCommand in self.__requirementsTest.items():
+            logging.debug("((test)) SBName=" + requireSubsystem.getName() + "/CMDName=" + requireCommand.getName())
 
         # 運行已註冊的子系統
         for subsystem in self.__subsystems:
@@ -96,17 +97,19 @@ class CommandScheduler():
         # 上鎖
         self.__inRunLoop = True
         # 操作已註冊的命令
-        for commandName, scheduledCommand in self.__scheduledCommands.items():
-            command = scheduledCommand['command']
+        __scheduledCommands = self.__scheduledCommands.copy()
+        for command, scheduledCommand in self.__scheduledCommands.items():
             interruptible = scheduledCommand['interruptible']
 
             # 如果命令不支持在禁用狀態下運行且當前機器人為禁用狀態，則取消註冊並中斷該命令
             if not(command.runsWhenDisabled()) and RobotState.isDisabled():
                 command.end(True)
+                __requirements = self.__requirements.copy()
                 for reqSubsystem, reqCommand in self.__requirements.items():
                     if reqCommand == command:
-                        del self.__requirements[reqSubsystem]
-                del self.__scheduledCommands[commandName]
+                        del __requirements[reqSubsystem]
+                self.__requirements = __requirements
+                del __scheduledCommands[command]
                 continue
 
             # 運行命令
@@ -115,10 +118,13 @@ class CommandScheduler():
             # 如果命令已完成則終止
             if command.isFinished():
                 command.end(False)
+                __requirements = self.__requirements.copy()
                 for reqSubsystem, reqCommand in self.__requirements.items():
                     if reqCommand == command:
-                        del self.__requirements[reqSubsystem]
-                del self.__scheduledCommands[commandName]
+                        del __requirements[reqSubsystem]
+                self.__requirements = __requirements
+                del __scheduledCommands[command]
+        self.__scheduledCommands = __scheduledCommands
         # 解鎖
         self.__inRunLoop = False
 
@@ -166,16 +172,15 @@ class CommandScheduler():
             return
 
         for command in commands:
-            __commandName = command.getName()
-            if not(__commandName in self.__scheduledCommands.keys()):
+            if not(command in self.__scheduledCommands.keys()):
                 continue
 
             command.end(True)
             __requirements = command.getRequirements()
             for subsystem in __requirements:
-                __subsystemName = subsystem.getName()
-                del self.__requirements[__subsystemName]
-            del self.__scheduledCommands[__commandName]
+                del self.__requirements[subsystem]\
+
+            del self.__scheduledCommands[command]
 
     def cancelAll(self):
         """

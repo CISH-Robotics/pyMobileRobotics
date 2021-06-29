@@ -13,6 +13,7 @@ class RobotState():
 
     __enabled = False
     __mode = Mode.kNone
+    __simulation = False
 
     @staticmethod
     def getMode():
@@ -32,7 +33,7 @@ class RobotState():
 
     @staticmethod
     def isSimulation():
-        return False
+        return RobotState.__simulation
 
     @staticmethod
     def isTeleoperation():
@@ -51,6 +52,10 @@ class RobotState():
         RobotState.__mode = mode
 
     @staticmethod
+    def setDisabled():
+        RobotState.__setMode(Mode.kDisabled)
+
+    @staticmethod
     def setTeleoperation():
         RobotState.__setMode(Mode.kTeleop)
 
@@ -61,3 +66,7 @@ class RobotState():
     @staticmethod
     def setTest():
         RobotState.__setMode(Mode.kTest)
+
+    @staticmethod
+    def setSimulation(enable: bool):
+        RobotState.__simulation = enable

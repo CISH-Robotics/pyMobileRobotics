@@ -21,3 +21,4 @@ from pyMobileRobotics.robot_state import RobotState
 
 
 from pyMobileRobotics.hal.digital_input import DigitalInput
+from pyMobileRobotics.hal.digital_output import DigitalOutput

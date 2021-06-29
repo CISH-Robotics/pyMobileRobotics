@@ -3,6 +3,9 @@ from pyMobileRobotics.command.command_scheduler import CommandScheduler
 
 class Command():
 
+    def __hash__(self):
+        return hash(str(self))
+
     def initialize(self):
         """
         命令的初始程序。在命令被初始化時執行一次。
