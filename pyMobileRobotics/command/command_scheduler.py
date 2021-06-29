@@ -178,7 +178,7 @@ class CommandScheduler():
             command.end(True)
             __requirements = command.getRequirements()
             for subsystem in __requirements:
-                del self.__requirements[subsystem]\
+                del self.__requirements[subsystem]
 
             del self.__scheduledCommands[command]
 
