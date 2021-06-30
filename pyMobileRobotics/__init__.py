@@ -11,6 +11,8 @@ import sys
 
 import logging
 
+from pyMobileRobotics.timer import Timer
+
 from pyMobileRobotics.command.command_base import CommandBase
 from pyMobileRobotics.command.subsystem_base import SubsystemBase
 from pyMobileRobotics.command.command_scheduler import CommandScheduler
@@ -22,3 +24,6 @@ from pyMobileRobotics.robot_state import RobotState
 
 from pyMobileRobotics.hal.digital_input import DigitalInput
 from pyMobileRobotics.hal.digital_output import DigitalOutput
+from pyMobileRobotics.hal.analog_input import AnalogInput
+from pyMobileRobotics.hal.can import CAN
+from pyMobileRobotics.hal.can_receiver import CANReceiver

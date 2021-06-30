@@ -3,6 +3,7 @@ from pyMobileRobotics.hal.hal import HAL
 import logging
 
 
+
 class DigitalOutput():
     """數位輸出"""
 
