@@ -15,12 +15,12 @@ class TimedRobot(IterativeRobotBase):
     def startCompetition(self):
         self.robotInit()
 
-        if self.isSimulation():
+        if super().isSimulation():
             self.simulationInit()
 
         __expirationTime = 0
         timer = Timer(interval=self.__period)
         while True:
             __expirationTime += self.__period
-            self.loopFunc()
+            self.__loopFunc()
             timer.checkpt()

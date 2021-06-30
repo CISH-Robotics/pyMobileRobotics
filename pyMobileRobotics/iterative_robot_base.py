@@ -103,7 +103,7 @@ class IterativeRobotBase(RobotBase):
         self.__period = period
         self.__watchdog = Watchdog(period, lambda: self.__printLoopOverrunMessage())
 
-    def loopFunc(self):
+    def __loopFunc(self):
         self.__watchdog.reset()
 
         if RobotState.isDisabled():

@@ -27,20 +27,27 @@ class CAN():
     def getMode() -> Mode:
         success, can_mode, vmxerr = HAL.getVMX().getCAN().GetMode()
         if success:
-            if can_mode == vmxpi.VMXCAN.VMXCAN_LISTEN:
+            if can_mode == CAN.Mode.LISTEN.value:
                 return CAN.Mode.LISTEN
-            elif can_mode == vmxpi.VMXCAN.VMXCAN_LOOPBACK:
+            elif can_mode == CAN.Mode.LOOPBACK.value:
                 return CAN.Mode.LOOPBACK
-            elif can_mode == vmxpi.VMXCAN.VMXCAN_NORMAL:
+            elif can_mode == CAN.Mode.NORMAL.value:
                 return CAN.Mode.NORMAL
-            elif can_mode == vmxpi.VMXCAN.VMXCAN_CONFIG:
+            elif can_mode == CAN.Mode.CONFIG.value:
                 return CAN.Mode.CONFIG
-            elif can_mode == vmxpi.VMXCAN.VMXCAN_OFF:
+            elif can_mode == CAN.Mode.OFF.value:
                 return CAN.Mode.OFF
             else:
                 logging.warning("Unknown CAN Mode")
         else:
             logging.error("Error retrieving current CAN Mode")
+            HAL.DisplayVMXError(vmxerr)
+
+    @staticmethod
+    def setMode(mode: Mode):
+        success, vmxerr = HAL.getVMX().getCAN().SetMode(vmxpi.VMXCAN.VMXCAN_NORMAL)
+        if not(success):
+            logging.error("Error setting CAN Mode to " + str(mode))
             HAL.DisplayVMXError(vmxerr)
 
     """ TODO
