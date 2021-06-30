@@ -10,7 +10,6 @@ class CommandScheduler():
     __subsystems = set()
     __scheduledCommands = {}
     __requirements = {}
-    __requirementsTest = {}
     __inRunLoop = False
     __toSchedule = set()
     __toCancel = set()
@@ -37,7 +36,6 @@ class CommandScheduler():
         self.__scheduledCommands[command] = {'interruptible': interruptible}
         for subsystem in requirements:
             self.__requirements[subsystem] = command
-            self.__requirementsTest[subsystem] = command
 
     def schedule(self, command, interruptible=True):
         """
@@ -86,9 +84,6 @@ class CommandScheduler():
         # 如果調度器為禁用則跳過
         if self.__disabled:
             return
-
-        for requireSubsystem, requireCommand in self.__requirementsTest.items():
-            logging.debug("((test)) SBName=" + requireSubsystem.getName() + "/CMDName=" + requireCommand.getName())
 
         # 運行已註冊的子系統
         for subsystem in self.__subsystems:
