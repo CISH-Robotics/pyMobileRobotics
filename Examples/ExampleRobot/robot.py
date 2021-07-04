@@ -10,7 +10,7 @@ from . import robot_container
 class Robot(pyMobileRobotics.TimedRobot):
 
     def __init__(self):
-        super().__init__()
+        super().__init__(period=0.015)
 
     def robotInit(self):
         """
