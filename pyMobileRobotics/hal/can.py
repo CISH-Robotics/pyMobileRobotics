@@ -43,13 +43,6 @@ class CAN():
             logging.error("Error retrieving current CAN Mode")
             HAL.DisplayVMXError(vmxerr)
 
-    @staticmethod
-    def setMode(mode: Mode):
-        success, vmxerr = HAL.getVMX().getCAN().SetMode(vmxpi.VMXCAN.VMXCAN_NORMAL)
-        if not(success):
-            logging.error("Error setting CAN Mode to " + str(mode))
-            HAL.DisplayVMXError(vmxerr)
-
     """ TODO
     @staticmethod
     def getBusStatus():
@@ -120,7 +113,7 @@ class CAN():
 
     @staticmethod
     def setMode(mode: Mode):
-        success, vmxerr = HAL.getVMX().getCAN().SetMode(mode)
+        success, vmxerr = HAL.getVMX().getCAN().SetMode(mode.value)
         if success != True:
             logging.error("Error setting CAN Mode to " + str(mode))
             HAL.DisplayVMXError(vmxerr)

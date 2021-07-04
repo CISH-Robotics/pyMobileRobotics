@@ -17,7 +17,8 @@ setup(name='pyMobileRobotics',
             'coloredlogs>=15.0.1',
             'opencv-contrib-python>=4.1.0.25',
             'imutils>=0.5.4',
-            'twisted>=21.2.0'
+            'twisted>=21.2.0',
+            'psutil>=5.5.1'
             ],
       python_requires='>=3'
      )

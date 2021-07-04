@@ -22,5 +22,5 @@ class TimedRobot(IterativeRobotBase):
         timer = Timer(interval=self.__period)
         while True:
             __expirationTime += self.__period
-            self.__loopFunc()
+            self.loopFunc()
             timer.checkpt()
