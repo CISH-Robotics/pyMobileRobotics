@@ -7,6 +7,4 @@ import pyMobileRobotics
 from . import robot
 
 
-argvs = sys.argv[1:]
-print(argvs)
 pyMobileRobotics.RobotBase.startRobot(robot.Robot())
