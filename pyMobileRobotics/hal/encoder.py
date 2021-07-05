@@ -37,3 +37,12 @@ class Encoder():
             HAL.DisplayVMXError(vmxerr);
         encoder_direction = True if encoder_direction == vmxpi.VMXIO.EncoderForward else False
         return counter, encoder_direction
+
+    def reset(self):
+        """
+        重置編碼器數值
+        """
+        success, vmxerr = HAL.getVMX().getIO().Encoder_Reset(self.__resHandle)
+        if not(success):
+            logging.error("Error reseting Encoder count.")
+            HAL.DisplayVMXError(vmxerr);
