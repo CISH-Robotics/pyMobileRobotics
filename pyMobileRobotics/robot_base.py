@@ -3,6 +3,7 @@ from pyMobileRobotics.hal.hal import HAL
 from pyMobileRobotics.network.network_variables import NetworkVariables
 import coloredlogs
 import logging
+import time
 
 class RobotBase():
 
@@ -46,6 +47,7 @@ class RobotBase():
         if not(simulation):
             logging.info('********* VMX-HAL library starting *********')
             HAL.getVMX()
+            time.sleep(1)
         logging.info('****** NetworkVariable server starting ******')
         NetworkVariables.startServer()
         logging.info('********** Robot program starting **********')
