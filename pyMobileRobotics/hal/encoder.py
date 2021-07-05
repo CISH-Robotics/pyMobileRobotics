@@ -12,6 +12,13 @@ class Encoder():
     __resHandle = None
 
     def __init__(self, channelA: int, channelB: int):
+        """
+        編碼器
+
+        Args:
+            channelA (int): A相輸入腳位
+            channelB (int): B相輸入腳位
+        """
         self.__channelA = channelA
         self.__channelB = channelB
         __channelAInfo = vmxpi.VMXChannelInfo(channelA, vmxpi.EncoderAInput)

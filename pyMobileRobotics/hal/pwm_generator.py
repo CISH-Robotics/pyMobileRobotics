@@ -17,6 +17,16 @@ class PWMGenerator():
     __maxDutyCycle = 65535
 
     def __init__(self, channel: int, frequency: int):
+        """
+        PWM訊號產生器
+
+        Args:
+            channel (int): 輸出腳位
+            frequency (int): 頻率(Hz)
+
+        Raises:
+            ValueError: 輸出腳位編號錯誤
+        """
         self.__channel = channel
 
         if channel in PWMGenerator.__resAChannels:
@@ -47,6 +57,11 @@ class PWMGenerator():
             dutyCycle = 0
         dutyCycle *= PWMGenerator.__maxDutyCycle
         dutyCycle = int(dutyCycle)
+        # 源自VMXpi-HAL Library Document的說明
+        # The VMX PWM Generator Resource's Duty Cycle value, 
+        # which must be in the range 0-MaxDutyCycleValue (which was previously configured via PWMGeneratorConfig).
+        # To convert this duty cycle value to the amount of "active" time (the PWM Pulse Length)
+        # multiply the duty cycle times 1 second 
         success, vmxerr = HAL.getVMX().getIO().PWMGenerator_SetDutyCycle(self.__resHandle, self.__channel, dutyCycle)
         if not(success):
             logging.error("Error Setting PWMGenerator duty cycle for Resource Index %d" % (self.__channel))

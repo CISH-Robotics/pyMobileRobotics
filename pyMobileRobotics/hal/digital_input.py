@@ -12,6 +12,12 @@ class DigitalInput():
     __resHandle = None
 
     def __init__(self, channel: int):
+        """
+        數位輸入
+
+        Args:
+            channel (int): 輸入腳位
+        """
         self.__channel = channel
         __dioConfig = vmxpi.DIOConfig();
         success, self.__resHandle, vmxerr = HAL.getVMX().getIO().ActivateSinglechannelResource(vmxpi.VMXChannelInfo(self.__channel, self.__channelMode), __dioConfig)

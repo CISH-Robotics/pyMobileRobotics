@@ -12,6 +12,12 @@ class AnalogInput():
     __resHandle = None
 
     def __init__(self, channel: int):
+        """
+        類比輸入
+
+        Args:
+            channel (int): 輸入腳位
+        """
         self.__channel = channel
         __accum_config = vmxpi.AccumulatorConfig();
         success, self.__resHandle, vmxerr = HAL.getVMX().getIO().ActivateSinglechannelResource(vmxpi.VMXChannelInfo(self.__channel, self.__channelMode), __accum_config)

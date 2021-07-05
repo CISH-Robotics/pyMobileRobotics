@@ -12,6 +12,12 @@ class DigitalOutput():
     __resHandle = None
 
     def __init__(self, channel: int):
+        """
+        數位輸出
+
+        Args:
+            channel (int): 輸出腳位
+        """
         self.__channel = channel
         __dioConfig = vmxpi.DIOConfig(vmxpi.DIOConfig.PUSHPULL);
         success, self.__resHandle, vmxerr = HAL.getVMX().getIO().ActivateSinglechannelResource(vmxpi.VMXChannelInfo(self.__channel, self.__channelMode), __dioConfig)
