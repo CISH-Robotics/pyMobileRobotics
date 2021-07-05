@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(name='pyMobileRobotics',
-      version='0.0.5',
+      version='0.0.6',
       description='WorldSkills Mobile Robotics System',
       author='CISH Robotics',
       author_email='crt@cish.xyz',
