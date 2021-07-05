@@ -2,34 +2,31 @@
 #  Copyright (c) 2021 CISH Robotics. All Rights Reserved.
 # ----------------------------------------------------------------------------
 
-import pyMobileRobotics
-import time
+import pyMobileRobotics as mb
+import ExampleRobot.robot_container as container
 
-class ExampleCommand(pyMobileRobotics.CommandBase):
+class ExampleCommand(mb.CommandBase):
 
     def __init__(self):
         # 必須要先運行父類的建構式，以進行基本初始化及註冊
         super().__init__()
         # 添加需求子系統
-        from ExampleRobot.robot_container import exampleSubsystem
-        super().addRequirements(exampleSubsystem)
-
-        self.__do = pyMobileRobotics.DigitalOutput(12)
+        super().addRequirements(container.drivetrain)
+        self._timer = mb.Timer()
 
     def initialize(self):
-        self.__do.set(True)
+        container.drivetrain.setMotorSpeed(0, 0)
+        self._timer.start()
         pass
 
     def execute(self):
-        value = True if time.time() % 0.4 < 0.2 else False
-        pyMobileRobotics.logging.debug('TEST=' + str(value))
-        self.__do.set(value)
+        container.drivetrain.setMotorSpeed(0, 480)
+        pass
 
     def end(self, interrupted: bool):
-        self.__do.set(False)
-        if interrupted:
-            pyMobileRobotics.logging.debug('command1 interrupted')
+        container.drivetrain.setMotorSpeed(0, 0)
+        self._timer.stop()
         pass
 
     def isFinished(self):
-        return False
+        return True if self._timer.get() > 3 else False

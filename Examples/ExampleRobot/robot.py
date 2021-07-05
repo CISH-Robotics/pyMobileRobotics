@@ -46,14 +46,13 @@ class Robot(pyMobileRobotics.TimedRobot):
         """
         該函數將在機器人進入自動模式時運行一次
         """
-        robot_container.exampleCommand.schedule()
+        robot_container.getAutonomousCommand().schedule()
         pass
 
     def autonomousPeriodic(self):
         """
         該函數將在自動模式下每次運行
         """
-        robot_container.exampleCommand2.schedule()
         pass
 
     def teleopInit(self):

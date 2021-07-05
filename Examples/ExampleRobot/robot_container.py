@@ -4,13 +4,13 @@
 
 import pyMobileRobotics
 from .subsystems.example_subsystem import ExampleSubsystem
-from .commands.example_command import ExampleCommand
-from .commands.example_command2 import ExampleCommand2
+from .subsystems.drivetrain import DriveTrain
+from .commands.test_command_group import TestCommandGroup
 
 
 exampleSubsystem = ExampleSubsystem()
-exampleCommand = ExampleCommand()
-exampleCommand2 = ExampleCommand2()
+drivetrain = DriveTrain()
+testCommandGroup = TestCommandGroup()
 
 def getAutonomousCommand():
-    return exampleCommand
+    return testCommandGroup
