@@ -142,7 +142,7 @@ class CommandScheduler():
         註冊子系統
 
         Args:
-            subsystems... (Subsystem): 要註冊的子系統
+            subsystems (Subsystem): 要註冊的子系統
         """
         self.__subsystems.update(subsystems)
 
@@ -151,7 +151,7 @@ class CommandScheduler():
         取消註冊子系統
 
         Args:
-            subsystems... (Subsystem): 要取消註冊的子系統
+            subsystems (Subsystem): 要取消註冊的子系統
         """
         for subsystem in subsystems:
             self.__subsystems.remove(subsystem)
@@ -161,7 +161,7 @@ class CommandScheduler():
         取消命令
 
         Args:
-            commands... (Command): 要取消的命令
+            commands (Command): 要取消的命令
         """
         if self.__inRunLoop:
             for command in commands:
