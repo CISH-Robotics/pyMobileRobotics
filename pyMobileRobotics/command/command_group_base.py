@@ -11,8 +11,7 @@ class CommandGroupBase(CommandBase):
     @staticmethod
     def registerGroupedCommands(*commands):
         for command in commands:
-            __command_name = command.__class__.__name__
-            CommandGroupBase.__groupedCommands.add(__command_name)
+            CommandGroupBase.__groupedCommands.add(command)
 
     @staticmethod
     def clearGroupedCommands():
@@ -38,7 +37,7 @@ class CommandGroupBase(CommandBase):
     @staticmethod
     def requireUngrouped(*commands):
         for command in commands:
-            if CommandGroupBase.__groupedCommands.isdisjoint(command):
+            if not(CommandGroupBase.__groupedCommands.isdisjoint(command)):
                 raise ValueError("Commands cannot be added to more than one CommandGroup")
 
     @staticmethod
@@ -50,7 +49,8 @@ class CommandGroupBase(CommandBase):
 
     @staticmethod
     def sequence(self, *commands):
-        pass
+        from pyMobileRobotics.command.sequential_command_group import SequentialCommandGroup
+        return SequentialCommandGroup(commands)
 
     @staticmethod
     def parallel(self, *commands):

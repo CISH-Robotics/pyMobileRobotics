@@ -5,16 +5,20 @@
 __version__ = "0.0.5"
 
 # import the necessary packages
+import logging
+
 import importlib
 import os
 import sys
 
-import logging
+from simple_pid import PID
 
 from pyMobileRobotics.timer import Timer
 
 from pyMobileRobotics.command.command_base import CommandBase
 from pyMobileRobotics.command.subsystem_base import SubsystemBase
+from pyMobileRobotics.command.command_group_base import CommandGroupBase
+from pyMobileRobotics.command.sequential_command_group import SequentialCommandGroup
 from pyMobileRobotics.command.command_scheduler import CommandScheduler
 from pyMobileRobotics.iterative_robot_base import IterativeRobotBase
 from pyMobileRobotics.timed_robot import TimedRobot

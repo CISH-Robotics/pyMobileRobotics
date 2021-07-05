@@ -13,8 +13,12 @@ class HAL():
         return HAL.__vmx
 
     @staticmethod
-    def createVMX(realtime=False, ahrs_update_rate_hz=50):
+    def createVMX(realtime=True, ahrs_update_rate_hz=50):
         HAL.__vmx = hal.vmxpi.VMXPi(realtime, ahrs_update_rate_hz)
+
+    @staticmethod
+    def isVMXOpen() -> bool:
+        return HAL.getVMX().IsOpen()
 
     @staticmethod
     def DisplayVMXError(vmxerr):

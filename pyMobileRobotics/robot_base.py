@@ -1,11 +1,8 @@
 from pyMobileRobotics.robot_state import RobotState
 from pyMobileRobotics.hal.hal import HAL
 from pyMobileRobotics.network.network_variables import NetworkVariables
-from enum import Enum
 import coloredlogs
 import logging
-import psutil
-import os
 
 class RobotBase():
 
@@ -45,8 +42,6 @@ class RobotBase():
             robot (RobotBase): 機器人程序
             simulation (bool, optional): 啟用模擬。 Defaults to False.
         """
-        p = psutil.Process(os.getpid())
-        p.nice(-50)
         RobotState.setSimulation(simulation)
         if not(simulation):
             logging.info('********* VMX-HAL library starting *********')

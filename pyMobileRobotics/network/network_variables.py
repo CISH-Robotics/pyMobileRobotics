@@ -28,7 +28,23 @@ class NetworkVariables():
     __updating = False
 
     @staticmethod
-    def setValue(name: str, value: any):
+    def setValue(name: str, value: any) -> any:
+        """
+        設置NetworkVariables的變量數值，
+        並且返回設置的數值。
+
+        **提示：一旦變量被創建，變量就不可再改變變量的型別。**
+
+        Args:
+            name (str): 變量名稱
+            value (any): 變量數值
+
+        Raises:
+            ValueError: 你無法在變量創建之後更改型別。
+
+        Returns:
+            any: 變量數值
+        """
         # 檢查表中是否已有變數，
         # 有的話檢查型態是否改變，改變則報錯。
         if (name in NetworkVariables.__variables.keys()
@@ -43,6 +59,7 @@ class NetworkVariables():
         NetworkVariables.__variables[name]['type'] = type(value)
         # 解鎖
         NetworkVariables.__updating = False
+        return value
 
     @staticmethod
     def getValue(name: str) -> any:

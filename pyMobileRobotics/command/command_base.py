@@ -1,6 +1,6 @@
-from pyMobileRobotics.command import command
+from pyMobileRobotics.command.command import Command
 
-class CommandBase(command.Command):
+class CommandBase(Command):
 
     __requirements = set()
 

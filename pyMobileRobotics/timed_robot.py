@@ -1,5 +1,5 @@
 from pyMobileRobotics.iterative_robot_base import IterativeRobotBase
-from oclock import Timer
+from pyMobileRobotics.__oclock_timer import OClockTimer
 import time
 
 
@@ -19,7 +19,7 @@ class TimedRobot(IterativeRobotBase):
             self.simulationInit()
 
         __expirationTime = 0
-        timer = Timer(interval=self.__period)
+        timer = OClockTimer(interval=self.__period)
         while True:
             __expirationTime += self.__period
             self.loopFunc()

@@ -5,6 +5,7 @@ import logging
 
 class CommandScheduler():
 
+
     __disabled = False
     __instance = None
     __subsystems = set()
@@ -54,8 +55,9 @@ class CommandScheduler():
             self.__toSchedule.add(command)
             return
 
-        # if __commandName in CommandGroupBase.getGroupedCommands():
-        #     raise ValueError('A command that is part of a command group cannot be independently scheduled')
+        from pyMobileRobotics.command.command_group_base import CommandGroupBase
+        if command in CommandGroupBase.getGroupedCommands():
+            raise ValueError('A command that is part of a command group cannot be independently scheduled')
 
         # 如果調度器被禁用，機器人被禁用並且命令在禁用時不運行，
         # 或者命令已經被調度，則不執行任何操作。

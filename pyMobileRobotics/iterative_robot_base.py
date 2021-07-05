@@ -137,8 +137,6 @@ class IterativeRobotBase(RobotBase):
         if RobotState.isSimulation():
             self.simulationPeriodic()
 
-        self.__watchdog.schedulerFunc()
-
     def __printLoopOverrunMessage(self):
         # logging.warning('Loop time of ' + str(self.__period) + 's overrun')
         pass
