@@ -30,3 +30,17 @@ class DigitalOutput():
         if not(success):
             logging.error("Error Setting Digital Output value for Resource Index %d" % (self.__channel))
             HAL.DisplayVMXError(vmxerr);
+
+    def pulse(self, high: bool, microseconds: int):
+        """
+        開始一個數位輸出的定時脈衝
+
+        **脈衝週期 <= 100 微秒是高度準確的，並且會阻塞 HighCurrDIO/CommDIO。 脈衝週期 > 100 微秒會降低計時精度，並且可能需要長達 1 毫秒才能終止，但是此調用不會阻塞。**
+        Args:
+            high (bool): True為高電位脈衝，False為低電位脈衝
+            microseconds (int): 脈衝時間
+        """
+        success, vmxerr = HAL.getVMX().getIO().DIO_Pulse(self.__resHandle, high, microseconds)
+        if not(success):
+            logging.error("Error Setting Digital Output pulse for Resource Index %d" % (self.__channel))
+            HAL.DisplayVMXError(vmxerr);
