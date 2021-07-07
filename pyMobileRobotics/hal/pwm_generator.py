@@ -14,7 +14,7 @@ class PWMGenerator():
     __resAChannels = [0, 2, 4, 6, 8, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
     __resBChannels = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 31, 33]
 
-    __maxDutyCycle = 65535
+    __maxDutyCycle = 32768
 
     def __init__(self, channel: int, frequency: int):
         """
@@ -41,7 +41,7 @@ class PWMGenerator():
         __dioConfig.SetMaxDutyCycleValue(PWMGenerator.__maxDutyCycle)
         success, self.__resHandle, vmxerr = HAL.getVMX().getIO().ActivateSinglechannelResource(vmxpi.VMXChannelInfo(self.__channel, self.__channelMode), __dioConfig)
         if not(success):
-            logging.error("Error Activating Singlechannel Resource PWMGenerator for Channel index %d." % (self.__channel))
+            logging.error("Error Activating Singlechannel Resource PWM Generator for Channel index %d." % (self.__channel))
             HAL.DisplayVMXError(vmxerr)
 
     def set(self, dutyCycle: float):
@@ -64,5 +64,5 @@ class PWMGenerator():
         # multiply the duty cycle times 1 second 
         success, vmxerr = HAL.getVMX().getIO().PWMGenerator_SetDutyCycle(self.__resHandle, self.__channel, dutyCycle)
         if not(success):
-            logging.error("Error Setting PWMGenerator duty cycle for Resource Index %d" % (self.__channel))
+            logging.error("Error Setting PWM Generator duty cycle for Resource Index %d" % (self.__channel))
             HAL.DisplayVMXError(vmxerr);
