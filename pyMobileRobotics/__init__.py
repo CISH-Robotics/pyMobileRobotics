@@ -31,5 +31,7 @@ from pyMobileRobotics.hal.digital_input import DigitalInput
 from pyMobileRobotics.hal.digital_output import DigitalOutput
 from pyMobileRobotics.hal.analog_input import AnalogInput
 from pyMobileRobotics.hal.encoder import Encoder
+from pyMobileRobotics.hal.pwm_generator import PWMGenerator
+from pyMobileRobotics.hal.input_capture import InputCapture
 from pyMobileRobotics.hal.can import CAN
 from pyMobileRobotics.hal.can_receiver import CANReceiver
